@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/tullebob/startcodeBackend_EKS.svg?branch=master)](https://travis-ci.org/tullebob/startcodeBackend_EKS)
+[![Build Status](https://travis-ci.com/tullebob/startcodeBackend_EKS.svg?branch=main)](https://travis-ci.com/tullebob/startcodeBackend_EKS)
 
 # CA3 Backend Project
 
