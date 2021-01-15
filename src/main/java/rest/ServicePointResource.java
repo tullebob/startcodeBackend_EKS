@@ -26,7 +26,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import utils.Helper;
 import utils.HttpUtils;
-import utils.Keys;
+
 
 @Path("servicepoints")
 public class ServicePointResource {
@@ -64,7 +64,7 @@ public class ServicePointResource {
         Callable<PostnordResponseDTO> postnordTask = new Callable<PostnordResponseDTO>() {
             @Override
             public PostnordResponseDTO call() throws IOException {
-                String fullURL = (postnordURL + "findNearestByAddress.json?apikey=" + Keys.postNordKey + "&countryCode=DK&agreementCountry=DK&city=" + helper.fixInput(city)
+                String fullURL = (postnordURL + "findNearestByAddress.json?apikey=" + "KEY" + "&countryCode=DK&agreementCountry=DK&city=" + helper.fixInput(city)
                 + "&postalCode=" + helper.fixInput(postalCode) + "&streetName=" + helper.fixInput(streetName) + "&streetNumber=" + helper.fixInput(streetNumber));
                 String postnord = HttpUtils.fetchData(fullURL);
                 PostnordResponseDTO postnordDTO = gson.fromJson(postnord, PostnordResponseDTO.class);
@@ -74,7 +74,7 @@ public class ServicePointResource {
         Callable<WeatherResponseDTO> weatherTask = new Callable<WeatherResponseDTO>() {
             @Override
             public WeatherResponseDTO call() throws IOException {
-                String weather = HttpUtils.fetchData(weatherURL + "?key=" + Keys.weatherKey + "&lang=da&postal_code=" + postalCode + "&country=DK");
+                String weather = HttpUtils.fetchData(weatherURL + "?key=" + "KEY" + "&lang=da&postal_code=" + postalCode + "&country=DK");
                 WeatherResponseDTO weatherDTO = gson.fromJson(weather, WeatherResponseDTO.class);
                 return weatherDTO;
             }

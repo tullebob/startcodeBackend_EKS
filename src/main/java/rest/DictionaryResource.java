@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
 import utils.EMF_Creator;
 import utils.Helper;
 import utils.HttpUtils;
-import utils.Keys;
+
 
 @Path("dictionary")
 public class DictionaryResource {

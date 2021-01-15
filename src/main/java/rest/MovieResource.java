@@ -19,7 +19,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import utils.Helper;
 import utils.HttpUtils;
-import utils.Keys;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("movie")
@@ -46,7 +45,7 @@ public class MovieResource {
     @RolesAllowed({"user"})
     public String getMovieReview(String movieJSON) throws IOException {
         MovieRequestDTO temp = gson.fromJson(movieJSON, MovieRequestDTO.class);
-        String movie = HttpUtils.fetchData(movieURL + "?query=" + helper.fixInput(temp.getQuery()) + "&api-key=" + Keys.movieKey);
+        String movie = HttpUtils.fetchData(movieURL + "?query=" + helper.fixInput(temp.getQuery()) + "&api-key=" + "KEY");
         MovieResponseDTO movieDTO = gson.fromJson(movie, MovieResponseDTO.class);
         return gson.toJson(movieDTO);
     }
