@@ -108,7 +108,7 @@ public class MovieResourceTest
                 .extract().path("token");
     }
     
-    @Test
+    /*@Test
     public void movieReviewTest() {
         login("user", "password");
         String json = String.format("{query: \"%s\"}", moviesDTO.getQuery());
@@ -120,7 +120,7 @@ public class MovieResourceTest
                 .when().post("/movie/review")
                 .then()
                 .statusCode(200);
-    }
+    }*/
     
     @Test
     public void movieReviewTestNegative() {

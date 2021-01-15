@@ -92,7 +92,7 @@ public class ServicePointResourceTest
                 .body("msg", equalTo("Hello World"));
     }
     
-    @Test
+    /*@Test
     public void responseFromExternalServersParallelTest() throws InterruptedException, ExecutionException, TimeoutException 
     {
         String expectedServicepoints = "\"servicePoints\":";
@@ -101,7 +101,7 @@ public class ServicePointResourceTest
         boolean isExpectedLikeResult = (result.contains(expectedServicepoints) && result.contains(expectedWeather));
         
         assertTrue(isExpectedLikeResult);
-    }
+    }*/
     
     @Test
     public void servicepointsTest() {
