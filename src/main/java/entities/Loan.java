@@ -24,14 +24,12 @@ public class Loan implements Serializable {
     private Long id;
     
      @Column(name="checkout_date", nullable = false)
- @Temporal(TemporalType.DATE)
- private Date checkoutDate;
+
+ private String checkoutDate;
  @Column(name="due_date", nullable = false)
- @Temporal(TemporalType.DATE)
- private Date dueDate;
+ private String dueDate;
  @Column(name="returned_date", nullable = true)
- @Temporal(TemporalType.DATE)
- private Date returnedDate;
+ private String returnedDate;
  
  @ManyToOne
  private User user;
@@ -42,6 +40,13 @@ public class Loan implements Serializable {
     public Book getBook() {
         return book;
     }
+
+    public Loan(String checkoutDate, String dueDate) {
+        this.checkoutDate = checkoutDate;
+        this.dueDate = dueDate;
+    }
+    
+    
 
     public void setBook(Book book) {
         this.book = book;
@@ -70,38 +75,42 @@ public class Loan implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
- 
- 
 
-    public Loan(Date checkoutDate, Date dueDate) {
+    public Loan(Long id, String checkoutDate, String dueDate, String returnedDate, User user, Book book) {
+        this.id = id;
         this.checkoutDate = checkoutDate;
         this.dueDate = dueDate;
-        this.returnedDate = new Date();
+        this.returnedDate = returnedDate;
+        this.user = user;
+        this.book = book;
     }
 
-    public Date getCheckoutDate() {
+    public String getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(Date checkoutDate) {
+    public void setCheckoutDate(String checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 
-    public Date getReturnedDate() {
+    public String getReturnedDate() {
         return returnedDate;
     }
 
-    public void setReturnedDate(Date returnedDate) {
+    public void setReturnedDate(String returnedDate) {
         this.returnedDate = returnedDate;
     }
  
+ 
+
+   
  
 }

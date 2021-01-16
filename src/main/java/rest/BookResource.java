@@ -59,18 +59,19 @@ public class BookResource {
         return gson.toJson(msg);*/
     }
     
-   /* @Path("loan")
+    @Path("loan")
     @POST
-    @RolesAllowed({"user", "admin"})
+    //@RolesAllowed({"user", "admin"})
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String loanBook(String input, int bookID, String userName ) {
+    public String loanBook(String input) {
+        System.out.println("ENDPOINTAJAJAJA");
         LoanDTO loanDTO = gson.fromJson(input, LoanDTO.class);
-        facade.createLoan(loanDTO.getCheckoutDate(), loanDTO.getDueDate(), bookID, userName);
+        facade.createLoan(loanDTO.getCheckoutDate(), loanDTO.getDueDate(), loanDTO.getBook(), loanDTO.getUsername());
         
         return gson.toJson(loanDTO);
     }
-    */
+    
     
     @Path("createbook")
     @POST
