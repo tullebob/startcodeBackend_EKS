@@ -40,8 +40,6 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
   
-  @OneToOne(cascade = CascadeType.PERSIST)
-  private Computer computer;
 
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
@@ -96,14 +94,6 @@ public class User implements Serializable {
     roleList.add(userRole);
   }
 
-    public Computer getComputer() {
-        return computer;
-    }
-
-    public void setComputer(Computer computer) {
-        this.computer = computer;
-    }
-  
   
 
 }

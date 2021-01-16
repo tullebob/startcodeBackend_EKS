@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.DictionaryRequestDTO;
 import dto.DictionaryResponeDTO;
-import dto.MovieRequestDTO;
 import facades.FacadeExample;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
