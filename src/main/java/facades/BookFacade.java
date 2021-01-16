@@ -48,6 +48,31 @@ public class BookFacade {
         }
 
     }
+    
+    public List<BookDTO> searchBook(String title, String author) throws API_Exception {
+        EntityManager em = emf.createEntityManager();
+        List<Book> allBooks = new ArrayList();
+        List<BookDTO> allBooksDTO = new ArrayList();
+
+        try {
+            TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b WHERE b.title = :title AND b.author = :author", Book.class)
+                    .setParameter("title", title).setParameter("author", author);
+            allBooks = query.getResultList();
+
+            if (allBooks.isEmpty()) {
+                throw new API_Exception("No books found, 404");
+            }
+            for (Book book : allBooks) {
+                allBooksDTO.add(new BookDTO(book));
+            }
+
+            return allBooksDTO;
+
+        } finally {
+            em.close();
+        }
+
+    }
 
     public String testData() {
         EntityManager em = emf.createEntityManager();
