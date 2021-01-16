@@ -1,14 +1,18 @@
 package facades;
 
 import dto.BookDTO;
+import dto.LoanDTO;
 import entities.Book;
+import entities.Loan;
 import entities.Role;
 import entities.User;
 import errorhandling.API_Exception;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 public class BookFacade {
@@ -112,5 +116,90 @@ public class BookFacade {
             em.close();
         }
     }
+    
+    public LoanDTO createLoan(Date checkoutDate, Date dueDate, int bookID, String userName ) {
+        EntityManager em = emf.createEntityManager();
+        
+        Loan loan;
+        
+        try {
+            em.getTransaction().begin();
+            loan = new Loan(checkoutDate, dueDate);
+        } finally {
+            em.close();
+        }
+        
+        Book book = em.find(Book.class, bookID);
+        User user = em.find(User.class, userName);
+        
+        user.addLoan(loan);
+        book.addLoan(loan);
+        loan.setUser(user);
+        loan.setBook(book);
+        
+        em.getTransaction().begin();
+            em.persist(loan);
+        em.getTransaction().commit();
+        return new LoanDTO(loan);
+    }
+    
+    //int isbn, String title, String author, String publisher, int publishYear
+    public BookDTO createBook(int isbn, String title, String author, String publisher, int publishYear) {
+        EntityManager em = emf.createEntityManager();
+        Book book;
+        try{
+            em.getTransaction().begin();
+            book = new Book(isbn, title, author, publisher, publishYear);
+            em.persist(book);
+            em.getTransaction().commit();
+            
+        } finally {
+            em.close();
+        }return new BookDTO(book);
+    }
+    
+    public BookDTO deleteBook(long id){
+        EntityManager em = emf.createEntityManager();
+        Book identifyBook = null;
+        try{
+           em.getTransaction().begin();
+           identifyBook = em.find(Book.class, id);
+           
+           if (identifyBook == null) {
+               throw new NoResultException("Book not found");
+           }
+           em.remove(identifyBook);
+           em.getTransaction().commit();
+        } finally {
+            em.close();
+        } 
+        return new BookDTO(identifyBook);
+    }
+    
+     public BookDTO editBook(long id, int editedIsbn, String editedTitle, String editedAuthor, String editedPublisher, int editedPublishYear) {
+        EntityManager em = emf.createEntityManager();
+        Book book = null;
+        try {
+            em.getTransaction().begin();
+            book = em.find(Book.class, id);
 
+            if (book == null) {
+                throw new NoResultException("Book does not exist");
+            }
+            book.setIsbn(editedIsbn);
+            book.setTitle(editedTitle);
+            book.setAuthor(editedAuthor);
+            book.setPublisher(editedPublisher);
+            book.setPublishYear(editedPublishYear);
+            em.getTransaction().commit();
+            
+
+        } finally {
+            em.close();
+        }
+
+        return new BookDTO(book);
+
+    }
+    
 }

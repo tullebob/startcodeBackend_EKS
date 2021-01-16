@@ -26,6 +26,15 @@ public class BookDTO {
         this.publishYear = book.getPublishYear();
     }
 
+    public int getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(int isbn) {
+        this.isbn = isbn;
+    }
+
+    
     public String getTitle() {
         return title;
     }

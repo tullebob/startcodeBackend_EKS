@@ -4,13 +4,17 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.BookDTO;
+import dto.LoanDTO;
 import entities.Book;
 import errorhandling.API_Exception;
 import facades.BookFacade;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -37,6 +41,7 @@ public class BookResource {
     
     @Path("all")
     @GET 
+    @RolesAllowed({"user", "admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllBooks() throws API_Exception {
         return gson.toJson(facade.getAllBooks());
@@ -44,6 +49,7 @@ public class BookResource {
     
     @Path("search/{title}/{author}")
     @GET
+    @RolesAllowed({"user", "admin"})
     @Produces ({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String searchBook(@PathParam("title") String title, @PathParam("author")String author) throws API_Exception {
@@ -53,14 +59,39 @@ public class BookResource {
         return gson.toJson(msg);*/
     }
     
-    /*@Path("search2")
+   /* @Path("loan")
     @POST
-    @Produces ({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"user", "admin"})
+    @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String searchBook2(String title, String author) throws API_Exception {
-        return gson.toJson(facade.searchBook(title, author));
-    }*/
+    public String loanBook(String input, int bookID, String userName ) {
+        LoanDTO loanDTO = gson.fromJson(input, LoanDTO.class);
+        facade.createLoan(loanDTO.getCheckoutDate(), loanDTO.getDueDate(), bookID, userName);
+        
+        return gson.toJson(loanDTO);
+    }
+    */
     
+    @Path("createbook")
+    @POST
+    @RolesAllowed({"admin"})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String createBook(String info) {
+        BookDTO bDTO = gson.fromJson(info, BookDTO.class);
+        return gson.toJson(facade.createBook(bDTO.getIsbn(), bDTO.getTitle(), bDTO.getAuthor(), bDTO.getPublisher(), bDTO.getPublishYear()));
+        
+    }
     
+    @Path("{id}")
+    @DELETE
+    @RolesAllowed({"admin"})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String deleteBook(@PathParam("id") long id) {
+        BookDTO bDTO = facade.deleteBook(id);
+        return "{\"status\":\"deleted\"}";
+        
+    }
     
 }

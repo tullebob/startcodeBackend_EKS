@@ -73,10 +73,10 @@ public class Loan implements Serializable {
  
  
 
-    public Loan(Date checkoutDate, Date dueDate, Date returnedDate) {
+    public Loan(Date checkoutDate, Date dueDate) {
         this.checkoutDate = checkoutDate;
         this.dueDate = dueDate;
-        this.returnedDate = returnedDate;
+        this.returnedDate = new Date();
     }
 
     public Date getCheckoutDate() {
