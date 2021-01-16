@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -40,8 +41,21 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
  
+  @OneToMany(mappedBy ="user", cascade = CascadeType.PERSIST)
   List<Loan> loans;
 
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void addLoan(Loan loan) {
+        this.loans.add(loan);
+        if (loan!= null) {
+            loan.setUser(this);
+        }
+    }
+
+  
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
       return null;

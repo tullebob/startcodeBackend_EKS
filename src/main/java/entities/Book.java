@@ -6,12 +6,16 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -51,6 +55,21 @@ public class Book implements Serializable {
     private String publisher;
     @Column(name="publish_year", nullable = false)
     private int publishYear;
+    
+    @OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST) 
+    List<Loan> loans;
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void addLoan(Loan loan) {
+        this.loans.add(loan);
+        if (loan != null) {
+            loan.setBook(this);
+        }
+    }
+    
 
     public Book(int isbn, String title, String author, String publisher, int publishYear) {
         this.isbn = isbn;
@@ -58,6 +77,7 @@ public class Book implements Serializable {
         this.author = author;
         this.publisher = publisher;
         this.publishYear = publishYear;
+        this.loans = new ArrayList<>();
     }
 
     public int getIsbn() {

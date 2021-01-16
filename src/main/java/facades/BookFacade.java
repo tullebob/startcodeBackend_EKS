@@ -2,6 +2,8 @@ package facades;
 
 import dto.BookDTO;
 import entities.Book;
+import entities.Role;
+import entities.User;
 import errorhandling.API_Exception;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,22 @@ public class BookFacade {
             Book book = new Book(111, "testTitel", "testAuthor", "testPublisher", 2000);
             Book book2 = new Book(222, "Titel", "Author", "Publisher", 2013);
             Book book3 = new Book(333, "testTitel3", "testAuthor3", "testPublisher3", 2007);
+            
+            User user = new User("user", "1234");
+            
+            User admin = new User("admin", "1234");
+            
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            
+            user.addRole(userRole);
+            admin.addRole(adminRole);
+            
+            
+            em.persist(userRole);
+            em.persist(adminRole);
+            em.persist(admin);
+            em.persist(user);
             
             em.persist(book);
             em.persist(book2);
