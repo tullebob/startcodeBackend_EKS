@@ -41,7 +41,7 @@ public class BookResource {
     
     @Path("all")
     @GET 
-    @RolesAllowed({"user", "admin"})
+    //@RolesAllowed({"user", "admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllBooks() throws API_Exception {
         return gson.toJson(facade.getAllBooks());
@@ -49,7 +49,7 @@ public class BookResource {
     
     @Path("search/{title}/{author}")
     @GET
-    @RolesAllowed({"user", "admin"})
+    //@RolesAllowed({"user", "admin"})
     @Produces ({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String searchBook(@PathParam("title") String title, @PathParam("author")String author) throws API_Exception {
@@ -61,11 +61,11 @@ public class BookResource {
     
     @Path("loan")
     @POST
-    //@RolesAllowed({"user", "admin"})
+    @RolesAllowed({"user", "admin"})
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String loanBook(String input) {
-        System.out.println("ENDPOINTAJAJAJA");
+        System.out.println("");
         LoanDTO loanDTO = gson.fromJson(input, LoanDTO.class);
         facade.createLoan(loanDTO.getCheckoutDate(), loanDTO.getDueDate(), loanDTO.getBook(), loanDTO.getUsername());
         

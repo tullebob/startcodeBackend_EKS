@@ -85,9 +85,9 @@ public class BookFacade {
         try {
             em.getTransaction().begin();
 
-            Book book = new Book(111, "testTitel", "testAuthor", "testPublisher", 2000);
-            Book book2 = new Book(222, "Titel", "Author", "Publisher", 2013);
-            Book book3 = new Book(333, "testTitel3", "testAuthor3", "testPublisher3", 2007);
+            Book book = new Book(111, "Løvernes Konge", "Donald Trump", "Republikanerne", 2000);
+            Book book2 = new Book(222, "Harry", "Potter", "Gyldendal", 2013);
+            Book book3 = new Book(333, "Bjørnenes ven", "testAuthor3", "testPublisher3", 2007);
 
             User user = new User("user", "1234");
 
